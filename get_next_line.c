@@ -6,7 +6,7 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:54:22 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/17 18:17:27 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/17 20:54:07 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,49 @@ static char	*ft_readit(int fd, char *buffer)
 	}
 	return (buffer);	
 }
-static char *nextline(char *buffer)
+
+static char *lines(char *buffer)
 {
+	char *line;
+	int x;
 	
+	x = 0;
+	if (!buffer)
+		return (NULL);
+	while(buffer[x] != '\0' && buffer[x] != '\n')
+		x++;
+	line = (char *)malloc((x + 2) * sizeof(char));
+	if(!line)
+		return (NULL);
+	x = 0;
+	while (x >= 0)
+	{
+		line[x] = buffer[x];
+		x++;
+	}
+	buffer[x] ='\n';
+	x++;
+	buffer[x] = '\0'; 
+	return(line);
 }
 char *get_next_line(int fd)
 {
 	static char	*buffer;
+	char *line;
 	
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);	
 	buffer = ft_strdup("");
 	buffer = ft_readit(fd, buffer);
+	line = lines(buffer);
 	
-	return (buffer);
+	return (line);
 }
-// int main()
-// {
-// 	int fd = open("line.txt", O_RDONLY);	
+int main()
+{
+	int fd = open("line.txt", O_RDONLY);	
 
-// 	printf("%s\n", get_next_line(fd));	
-// 	close(fd);
-// }
+	printf("<<<%s>>>", get_next_line(fd));	
+	close(fd);
+}
 	

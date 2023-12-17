@@ -6,7 +6,7 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:55:29 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/17 17:54:08 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/17 20:40:48 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strdup(const char* str);
 
 #endif
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 20
 #endif
 
 
