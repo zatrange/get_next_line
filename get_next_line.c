@@ -6,7 +6,7 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:54:22 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/18 18:59:40 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/19 20:36:22 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,15 @@ static char *joined(char *buffer, char *temp)
 static char	*ft_readit(int fd, char *buffer)
 {
 	char *temp;
-	int bytesread = 0;
+	int bytesread = 1;
 		if (!buffer)
 			buffer = ft_strdup("");
 	temp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!temp)
-	{	
-		free(temp);
 		return(NULL);
-	}
-	while ((bytesread = read(fd, temp, BUFFER_SIZE)) > 0)
-	{		
-		if(bytesread < 0)
-		{
-			free(temp);
-			return (NULL);
-		}
+	while (bytesread > 0)
+	{
+		bytesread = read(fd, temp, BUFFER_SIZE);
 		temp[bytesread] = '\0';
 		 buffer = joined(buffer, temp);
 		if (ft_strchr(buffer, '\n') != 0)
@@ -47,31 +40,37 @@ static char	*ft_readit(int fd, char *buffer)
 	}                       
 	// printf(" \n||%s||\n ", buffer);
 	free(temp);
-	return (buffer);	
+	return (buffer);
 }
 static char *next(char *buffer)
 {
-	int x;
+	int		x;
 	char	*remains;
-	int y;
-
+	int		y;
+	
+	
 	x = 0;
 	y = 0;
-	while (buffer[x] != '\0' && buffer[x] != '\n')
-		x++;
-	if(!buffer[x])
+	if(!buffer || !buffer[x])
 	{
 		free(buffer);
 		return (NULL);
-	}
-	remains = (char *)malloc((ft_strlen(buffer) - x + 1) * sizeof(char));
+		
+	}	
+	while (buffer[x] != '\0' && buffer[x] != '\n')
+		x++;
+	
+		int len = ft_strlen(buffer) - x;
+	remains = (char *)malloc((len + 1) * sizeof(char));
+	x++;
 	if (!remains)
 	{	
 		free(buffer);
 		return (NULL);
 	}
-	x++;
-	while (buffer[x])
+		
+	// printf("\n--%s--\n", buffer);
+	while (y < len)
 	{
 		remains[y] = buffer[x];
 		x++;
@@ -89,12 +88,13 @@ static char *lines(char *buffer)
 	int n;
 	
 	x = 0;
-	if (buffer[0] == '\0' || !buffer)
+	if (!buffer || !buffer[x])
 		return (NULL);
 	while(buffer[x] != '\0' && buffer[x] != '\n')
 		x++;
-	n = x + 2;
-	printf("\n----%d----\n", n);
+	x++;
+	n = x + 1;
+
 	line = (char *)malloc(n * sizeof(char));
 	if(!line)
 		return (NULL);
@@ -103,10 +103,11 @@ static char *lines(char *buffer)
 	{
 		line[x] = buffer[x];
 		x++;	
-	}
-	line[x] = '\n';
-	x++;
-	line[x] = '\0'; 
+	}	
+	printf("\n----%d----\n", x);
+	if(buffer[x] == '\n')
+		line[x] = '\n';
+	line[x + 1] = '\0'; 
 	return(line);
 }
 char *get_next_line(int fd)
@@ -130,21 +131,21 @@ char *get_next_line(int fd)
 // }
 
 
-int main()
-{
-	// atexit(f);
-	int fd = open("line.txt", O_RDONLY);	
-	printf("<<<%s>>>", get_next_line(fd));
-	printf("\n-------------------------------------------\n");
-	printf("<<<%s>>>", get_next_line(fd));	
-	printf("\n-------------------------------------------\n");
-	printf("<<<%s>>>", get_next_line(fd));
+// int main()
+// {
+// 	// atexit(f);
+// 	int fd = open("line.txt", O_RDONLY);	
+// 	printf("<<<%s>>>", get_next_line(fd));
 // 	printf("\n-------------------------------------------\n");
-// // 	// printf("<<<%s>>>", get_next_line(fd));
-// // 	// printf("\n-------------------------------------------\n");
-// // 	// printf("<<<%s>>>", get_next_line(fd));
-// // 	// printf("\n-------------------------------------------\n");
-// // 	// printf("<<<%s>>>", get_next_line(fd));
-	close(fd);
-}
+// 	printf("<<<%s>>>", get_next_line(fd));	
+// 	printf("\n-------------------------------------------\n");
+// 	printf("<<<%s>>>", get_next_line(fd));
+// // // 	printf("\n-------------------------------------------\n");
+// // // // 	// printf("<<<%s>>>", get_next_line(fd));
+// // // // 	// printf("\n-------------------------------------------\n");
+// // // // 	// printf("<<<%s>>>", get_next_line(fd));
+// // // // 	// printf("\n-------------------------------------------\n");
+// // // // 	// printf("<<<%s>>>", get_next_line(fd));
+// 	close(fd);
+// }
 	

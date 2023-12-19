@@ -6,7 +6,7 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:55:29 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/18 14:13:43 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/19 20:13:52 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ size_t	ft_strlen(const char *str);
 char	*strjoin(const char *s1, const char *s2);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char* str);
+void	*ft_calloc(size_t count , size_t size);
 
 #endif
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 20
+# define BUFFER_SIZE 1
 #endif
 
 

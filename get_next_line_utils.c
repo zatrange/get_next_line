@@ -6,7 +6,7 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:55:26 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/17 17:52:44 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/19 13:13:28 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ size_t ft_strlen(const char *str)
 	}
 	return (x);
 }
-
 char *strjoin(const char *s1, const char *s2)
 {
 	char	*joined;
@@ -81,4 +80,22 @@ char	*ft_strdup(const char* str)
 	}
 	dup[x] = '\0';
 	return(dup);
+}
+void	*ft_calloc(size_t count , size_t size)
+{
+	char	*str;
+	size_t	x;
+
+	if ((int)count < 0 && (int)size < 0)
+		return (NULL);
+	x = 0;
+	str = (char *)malloc((count * size) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (x < (count * size))
+	{
+		str[x] = '\0';
+		x++;
+	}
+	return (str);
 }
