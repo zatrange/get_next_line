@@ -6,7 +6,7 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:54:22 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/21 11:45:57 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:25:08 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 static char *joined(char *buffer, char *temp)
 {
 	char *tp;
-	if (!buffer || !temp)
-		return (NULL);
-	tp = strjoin(buffer, temp);
+	tp = ft_strjoin(buffer, temp);
 	if(!tp)
 	{
 		free(buffer);
@@ -32,7 +30,7 @@ static char	*ft_readit(int fd, char *buffer)
 	char *temp;
 	int bytesread = 1;
 		if (!buffer)
-			buffer = ft_strdup("");
+			buffer = ft_calloc(1, 1);
 		if(!buffer)
 			return(NULL);
 	temp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
@@ -74,7 +72,6 @@ static char *next(char *buffer)
 	}	
 	while (buffer[x] != '\0' && buffer[x] != '\n')
 		x++;
-	
 		int len = ft_strlen(buffer) - x;
 	remains = (char *)malloc((len + 1) * sizeof(char));
 	x++;
@@ -99,7 +96,6 @@ static char *lines(char *buffer)
 {
 	char *line;
 	int x;
-	int n;
 	
 	x = 0;
 	if (!buffer || !buffer[x])
@@ -108,9 +104,7 @@ static char *lines(char *buffer)
 		x++;
 	if (buffer[x] == '\n')
 		x++;
-	n = x + 1;
-
-	line = ft_calloc(n, 1);
+	line = ft_calloc(x + 1, 1);
 	x = 0;
 	while (buffer[x] != '\0')
 	{
@@ -122,7 +116,7 @@ static char *lines(char *buffer)
 		}
 		x++;
 	}
-	// printf("\n----%d----\n", x);
+	// printf("\n----%p----\n", line);
 	return(line);
 }
 char *get_next_line(int fd)
@@ -140,7 +134,7 @@ char *get_next_line(int fd)
 		return (NULL);
 	line = lines(buffer);
 	buffer = next(buffer);
-	// printf("<%p>\n", buffer);
+	// printf("<%p>\n", line);
 	return (line);
 }
 void f()
@@ -151,20 +145,33 @@ void f()
 
 // int main()
 // {
-// 	atexit(f);
+// 	// atexit(f);
 // 	int fd = open("line.txt", O_RDONLY);
-// 	printf("<<<%s>>>", get_next_line(fd));
-// 	printf("\n-------------------------------------------\n");
-// 	printf("<<<%s>>>", get_next_line(fd));	
-// 	printf("\n-------------------------------------------\n");
-// 	printf("<<<%s>>>", get_next_line(fd));
-// 	printf("\n-------------------------------------------\n");
-// 	printf("<<<%s>>>", get_next_line(fd));	
+// 	char *lol;
+// 	int x = 0;
+// 	int line = 7;
+// 	// lol = get_next_line(fd);
+// 	// printf("<<%s>>\n",lol);
+// 	// free(lol);
+// 	// printf("\n-------------------------------------------\n");
+// 	// 	lol = get_next_line(fd);
+// 	// printf("<<%s>>\n",lol);
+// 	// free(lol);
+// 	// printf("\n-------------------------------------------\n");
+// 	// 	lol = get_next_line(fd);
+// 	// printf("<<%s>>\n",lol);
+// 	// free(lol);
+// 	// printf("\n-------------------------------------------\n");
+// 	// 	lol = get_next_line(fd);
+// 	// printf("<<%s>>\n",lol);
+// 	// free(lol);
+// 	// printf("\n-------------------------------------------\n");
+// 	while (x < line && (lol = get_next_line(fd))!= NULL)
+// 	{
+// 		printf("%s", lol);
+// 		free(lol);
+// 		x++;
+// 	}
 // 	close(fd);
-// // // // 	// printf("\n-------------------------------------------\n");
-// // // // 	// printf("<<<%s>>>", get_next_line(fd));
-// // // // 	// printf("\n-------------------------------------------\n");
-// // // // 	// printf("<<<%s>>>", get_next_line(fd));
-	
 // }
 	

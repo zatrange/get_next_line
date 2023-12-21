@@ -6,11 +6,12 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:55:26 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/19 13:13:28 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/21 18:03:33 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <string.h>
 
 size_t ft_strlen(const char *str)
 {
@@ -23,7 +24,25 @@ size_t ft_strlen(const char *str)
 	}
 	return (x);
 }
-char *strjoin(const char *s1, const char *s2)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	char		*tempd;
+	const char	*temps;
+	size_t		x;
+
+	tempd = (char *)dest;
+	temps = (const char *)src;
+	x = 0;
+	if (!dest && !src)
+		return (0);
+	while (tempd != temps && x < n)
+	{
+		tempd[x] = temps[x];
+		x++;
+	}
+	return (dest);
+}
+char *ft_strjoin(const char *s1, const char *s2)
 {
 	char	*joined;
 	size_t	x;
@@ -35,18 +54,9 @@ char *strjoin(const char *s1, const char *s2)
 			+ ft_strlen(s2) + 1) * sizeof(char));
 	if(!joined)
 		return (NULL);
-	while (x < ft_strlen(s1))
-	{
-		joined[x] = s1[x];
-		x++;
-	}
-	x = 0;
-	while(x < ft_strlen(s2))
-	{
-		joined[ft_strlen(s1) + x] = s2[x];
-		x++;
-	}
-	joined[ft_strlen(s1) + x] = '\0';
+	ft_memcpy(joined, s1, ft_strlen(s1));
+	ft_memcpy(joined + ft_strlen(s1), s2, ft_strlen(s2));
+	joined[ft_strlen(s1) + ft_strlen(s2)] = '\0';
 	return (joined);
 }
 char	*ft_strchr(const char *str, int c)
@@ -64,23 +74,7 @@ char	*ft_strchr(const char *str, int c)
 		return ((char *)&str[x]);
 	return(0);
 }
-char	*ft_strdup(const char* str)
-{
-	int	x;
-	char	*dup;
 
-	x = 0;
-	dup = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
-	if(!dup)
-		return(NULL);
-	while (str[x] != '\0')
-	{
-		dup[x] = str[x];
-		x++;
-	}
-	dup[x] = '\0';
-	return(dup);
-}
 void	*ft_calloc(size_t count , size_t size)
 {
 	char	*str;
