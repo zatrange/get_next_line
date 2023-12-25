@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/21 18:13:58 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/25 18:05:04 by zgtaib           ###   ########.fr       */
+/*   Created: 2023/12/25 14:15:11 by zgtaib            #+#    #+#             */
+/*   Updated: 2023/12/25 20:12:46 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include<stdio.h>
+#include "get_next_line_bonus.h"
 
 static char *chunks(char *buffer, char *temp)
 {
@@ -38,11 +37,7 @@ static char	*readbuffer(char *buffer, int fd)
 	{
 		bytesread = read(fd, temp, BUFFER_SIZE);
 		if (bytesread == -1)
-		{
-			free(temp);
-			free(buffer);
-			return(NULL);
-		}
+			return (free(temp), free(buffer), buffer = NULL, NULL);
 		temp[bytesread] = '\0';
 		buffer = chunks(buffer, temp);
 		if (!buffer)
@@ -107,20 +102,20 @@ static char	*lines(char *buffer)
 }
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
-	buffer = readbuffer(buffer, fd);
-	if (!buffer)
+	buffer[fd] = readbuffer(buffer[fd], fd);
+	if (!buffer[fd])
 	{
-		free(buffer);
+		free(buffer[fd]);
 		return(NULL);
 	}
-	line = lines(buffer);
+	line = lines(buffer[fd]);
 	if (!line)
-		return (free(buffer), buffer = NULL, NULL);
-	buffer = remainder(buffer);
+		return (free(buffer[fd]), buffer[fd] = NULL, NULL);
+	buffer[fd] = remainder(buffer[fd]);
 	return (line);
 }
