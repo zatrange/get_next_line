@@ -6,91 +6,13 @@
 /*   By: zgtaib <zgtaib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:15:43 by zgtaib            #+#    #+#             */
-/*   Updated: 2023/12/25 18:14:22 by zgtaib           ###   ########.fr       */
+/*   Updated: 2023/12/26 16:26:20 by zgtaib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-// size_t	ft_strlen(const char *str)
-// {
-// 	int	x;
-
-// 	x = 0;
-// 	while (str[x] != '\0')
-// 		x++;
-// 	return (x);
-// }
-// char	*ft_memcpy(void *dest, const void *src, size_t len)
-// {
-// 	size_t		x;
-// 	char		*tempd;
-// 	const char	*temps;
-	
-// 	x = 0;
-// 	tempd = (char *)dest;
-// 	temps = (const char *)src;
-// 	if (!dest || !src)
-// 		return (NULL);
-// 	while (tempd != temps && x < len)
-// 	{
-// 		tempd[x] = temps[x];
-// 		x++;
-// 	}
-// 	return (dest);
-// }
-
-// void	*ft_calloc(size_t count, size_t size)
-// {
-// 	char	*str;
-// 	size_t	len;
-// 	size_t	x;
-	
-// 	len = count * size;
-// 	x = 0;
-// 	str = (char *)malloc(len * sizeof(char));
-// 	if(!str)
-// 		return (NULL);
-// 	while (x < len)
-// 	{
-// 		str[x] = '\0';
-// 		x++;
-// 	}
-// 	return (str);
-// }
-
-// char 	*ft_strjoin(const char *s1, const char *s2)
-// {
-// 	char	*joined;
-// 	int		len;
-	
-// 	if (!s1 || !s2)
-// 		return (NULL);
-	
-// 	len = ft_strlen(s1) + ft_strlen(s2);
-// 	joined = ft_calloc(len + 1, sizeof(char));
-// 	if (!joined)
-// 		return (NULL);
-// 	ft_memcpy(joined, s1, ft_strlen(s1));
-// 	ft_memcpy(joined + ft_strlen(s1), s2, ft_strlen(s2));
-// 	return (joined);
-// }
-// char	*ft_strchr(const char *str, int c)
-// {
-// 	int	x;
-
-// 	x = 0;
-// 	while (str[x] != '\0')
-// 	{
-// 		if (str[x] == c)
-// 			return ((char *)&str[x]);
-// 		x++;
-// 	}
-// 	if (str[x] == c)
-// 		return ((char *)&str[x]);
-// 	return (0);
-// }
-size_t ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t	x;
 
@@ -99,14 +21,15 @@ size_t ft_strlen(const char *str)
 		x++;
 	return (x);
 }
+
 char	*ft_memcpy(void *dest, const void *src, size_t len)
 {
 	char		*tempd;
 	const char	*temps;
 	size_t		x;
-	
+
 	if (!dest && !src)
-		return NULL;
+		return (NULL);
 	tempd = (char *)dest;
 	temps = (const char *)src;
 	x = 0;
@@ -115,24 +38,26 @@ char	*ft_memcpy(void *dest, const void *src, size_t len)
 		tempd[x] = temps[x];
 		x++;
 	}
-	return(dest);
+	return (dest);
 }
+
 char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char *joined;
-	size_t len;
+	char	*joined;
+	size_t	len;
 
 	if (!s1 || !s2)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
 	joined = ft_calloc(len, 1);
-	if(!joined)
+	if (!joined)
 		return (NULL);
 	ft_memcpy(joined, s1, ft_strlen(s1));
 	ft_memcpy(joined + ft_strlen(s1), s2, ft_strlen(s2));
 	return (joined);
 }
-void *ft_calloc(size_t count, size_t size)
+
+void	*ft_calloc(size_t count, size_t size)
 {
 	char	*str;
 	size_t	x;
@@ -142,7 +67,7 @@ void *ft_calloc(size_t count, size_t size)
 	x = 0;
 	str = (char *)malloc((count * size) * sizeof(char));
 	if (!str)
-		return(NULL);
+		return (NULL);
 	while (x < (count * size))
 	{
 		str[x] = '\0';
@@ -150,6 +75,7 @@ void *ft_calloc(size_t count, size_t size)
 	}
 	return (str);
 }
+
 char	*ft_strchr(const char *str, int c)
 {
 	char	i;
@@ -157,15 +83,13 @@ char	*ft_strchr(const char *str, int c)
 
 	i = (char)c;
 	x = 0;
-	// if (!str)
-	// 	return (NULL);
 	while (str[x] != '\0')
 	{
 		if (str[x] == i)
-			return ((char *) &str[x]);
+			return ((char *)&str[x]);
 		x++;
 	}
 	if (str[x] == i)
-		return ((char *) &str[x]); 
+		return ((char *)&str[x]);
 	return (0);
 }
